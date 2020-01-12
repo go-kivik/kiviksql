@@ -5,6 +5,8 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/pingcap/parser"
+
 	"github.com/go-kivik/kivik"
 )
 
@@ -32,5 +34,6 @@ func (drv) Open(dsn string) (driver.Conn, error) {
 	client, err := kivik.New(kivikDriver, dsn)
 	return &conn{
 		client: client,
+		parser: parser.New(),
 	}, err
 }
