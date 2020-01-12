@@ -16,11 +16,11 @@ func TestOpen(t *testing.T) {
 	tests := testy.NewTable()
 	tests.Add("Invalid DSN", tt{
 		dsn: "https://%xxx",
-		err: `parse https://%xxx: invalid URL escape "%xx"`,
+		err: `parse "?https://%xxx"?: invalid URL escape "%xx"`,
 	})
 	tests.Add("unknown driver", tt{
 		dsn: "foo,http://example.com",
-		err: `kivik: unknown driver "foo" (forgotten import?)`,
+		err: `kivik: unknown driver "foo" \(forgotten import\?\)`,
 	})
 	tests.Add("default to couch", tt{
 		dsn: "http://example.com",
@@ -32,7 +32,7 @@ func TestOpen(t *testing.T) {
 	drv := &drv{}
 	tests.Run(t, func(t *testing.T, tt tt) {
 		cx, err := drv.Open(tt.dsn)
-		testy.Error(t, tt.err, err)
+		testy.ErrorRE(t, tt.err, err)
 		if cx.(*conn).client == nil {
 			t.Fatal("Expected non-nil conn.client")
 		}
