@@ -1,0 +1,5 @@
+(map[string]interface {}) (len=1) {
+  (string) (len=2) "id": (map[string]interface {}) (len=1) {
+    (string) (len=3) "$eq": (string) (len=2) "10"
+  }
+}
